@@ -1,56 +1,58 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import React from 'react'
+import { View, Text, Button, StyleSheet, FlatList } from 'react-native'
 
-import { CATEGORIES, MEALS } from '../data/dummy-data';
-import CategoriesScreen from './CategoriesScreen';
-import MealItem from '../components/MealItem';
+import { CATEGORIES, MEALS } from '../data/dummy-data'
+import CategoriesScreen from './CategoriesScreen'
+import MealItem from '../components/MealItem'
 
-const CatergoryMealScreen = props => {
-  const renderMealItem = itemData => {
+const CatergoryMealScreen = (props) => {
+  const renderMealItem = (itemData) => {
     return (
-      <MealItem 
+      <MealItem
         title={itemData.item.title}
         duration={itemData.item.duration}
         complexity={itemData.item.complexity}
-        affordability={itemData.item.affordability} 
+        affordability={itemData.item.affordability}
         image={itemData.item.imageUrl}
         onSelectMeal={() => {
           props.navigation.navigate({
-            routeName: 'MealDetail', 
+            routeName: 'MealDetail',
             params: {
-              mealId: itemData.item.id
-            }
+              mealId: itemData.item.id,
+            },
           })
         }}
       />
-    );
+    )
   }
-  const catId = props.navigation.getParam('categoryId');
-  const selectedCat = CATEGORIES.find(cat => cat.id === catId);
-  const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+  const catId = props.navigation.getParam('categoryId')
+  const selectedCat = CATEGORIES.find((cat) => cat.id === catId)
+  const displayedMeals = MEALS.filter(
+    (meal) => meal.categoryIds.indexOf(catId) >= 0
+  )
   return (
     <FlatList
       data={displayedMeals}
       renderItem={renderMealItem}
-      style={{width: '100%'}}
+      style={{ width: '100%' }}
     />
-    )
-};
+  )
+}
 
 CatergoryMealScreen.navigationOptions = (navData) => {
-  const catId = navData.navigation.getParam('categoryId');
-  const selectedCat = CATEGORIES.find(cat => cat.id === catId);
+  const catId = navData.navigation.getParam('categoryId')
+  const selectedCat = CATEGORIES.find((cat) => cat.id === catId)
   return {
-    headerTitle: selectedCat.title
-  };
-};
+    headerTitle: selectedCat.title,
+  }
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
+    alignItems: 'center',
+  },
+})
 
-export default CatergoryMealScreen;
+export default CatergoryMealScreen
